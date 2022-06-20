@@ -9,6 +9,8 @@ class ReusableTextField extends StatelessWidget {
   final Function validate;
   final VoidCallback? suffixPressed;
   final VoidCallback? onTap;
+  final Function? onSubmit;
+  final TextInputType type;
 
   ReusableTextField({
     required this.controller,
@@ -18,13 +20,16 @@ class ReusableTextField extends StatelessWidget {
     required this.textLabel,
     required this.validate,
     this.suffixPressed,
-    this.onTap
+    this.onTap,
+    required this.type,
+    this.onSubmit
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
+      keyboardType: type,
       decoration: InputDecoration(
           labelText: textLabel,
           prefixIcon: Icon(
@@ -41,6 +46,7 @@ class ReusableTextField extends StatelessWidget {
           )),
       obscureText: isPassword,
       onTap: onTap,
+      onFieldSubmitted: (val) => onSubmit!(val),
       validator: (val) => validate(val),
     );
   }
