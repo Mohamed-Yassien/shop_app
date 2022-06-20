@@ -1,0 +1,24 @@
+import 'package:flutter/material.dart';
+import 'package:my_shop/shared/styles/themes.dart';
+
+
+import 'modules/on_boarding_screen.dart';
+
+main(){
+  runApp( const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return  MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: lightTheme,
+      themeMode: ThemeMode.light,
+      darkTheme: darkTheme,
+      home: const OnBoardingScreen(),
+    );
+  }
+}
