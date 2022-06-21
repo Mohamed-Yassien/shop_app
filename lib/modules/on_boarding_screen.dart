@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:my_shop/network/local/cache_helper.dart';
+import 'package:my_shop/shared/methods.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../models/board_model.dart';
 import 'login_screen.dart';
-
 
 class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({Key? key}) : super(key: key);
@@ -35,21 +36,21 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     ),
   ];
 
+  void submit() {
+    CacheHelper.saveData(key: 'onBoarding', value: true).then(
+      (value) {
+        navigateToAndFinish(widget: LoginScreen(), context: context);
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         actions: [
           TextButton(
-            onPressed: () {
-              Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(
-                  builder: (context) =>  LoginScreen(),
-                ),
-                (route) => false,
-              );
-            },
+            onPressed: submit,
             child: const Text(
               'SKIP',
               style: TextStyle(
@@ -67,7 +68,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
             Expanded(
               child: PageView.builder(
                 onPageChanged: (index) {
-                  if (index == boardItems.length -1) {
+                  if (index == boardItems.length - 1) {
                     setState(
                       () {
                         isLast = true;
@@ -107,12 +108,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 FloatingActionButton(
                   onPressed: () {
                     if (isLast) {
-                      Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>  LoginScreen(),
-                          ),
-                          (route) => false);
+                       submit();
                     } else {
                       boardController.nextPage(
                         duration: const Duration(

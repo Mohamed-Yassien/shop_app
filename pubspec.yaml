@@ -39,6 +39,8 @@ dependencies:
   bloc:
   flutter_bloc:
   dio:
+  fluttertoast: ^8.0.9
+  shared_preferences:
 
 dev_dependencies:
   flutter_test:

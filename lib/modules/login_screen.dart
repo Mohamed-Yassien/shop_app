@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:my_shop/layout/shopLayout.dart';
+import 'package:my_shop/network/local/cache_helper.dart';
+import 'package:my_shop/shared/methods.dart';
 import 'package:my_shop/shared/widgets/reusable_text_button.dart';
 import 'package:my_shop/shared/widgets/reusable_text_field.dart';
+import 'package:my_shop/shared/widgets/reusable_toast.dart';
 
 import '../cubit/login_cubit/login_cubit.dart';
 import '../cubit/login_cubit/login_states.dart';
@@ -18,7 +23,25 @@ class LoginScreen extends StatelessWidget {
     return BlocProvider(
       create: (context) => LoginCubit(),
       child: BlocConsumer<LoginCubit, LoginStates>(
-        listener: (context, state) {},
+        listener: (context, state) {
+          if (state is LoginSuccessState) {
+            if (state.loginModel.status!) {
+              CacheHelper.saveData(
+                      key: 'token', value: state.loginModel.data!.token)
+                  .then(
+                (value) {
+                  navigateToAndFinish(
+                      widget: const ShopLayout(), context: context);
+                },
+              );
+            } else {
+              showToast(
+                msg: state.loginModel.message!,
+                toastStates: ToastStates.ERROR,
+              );
+            }
+          }
+        },
         builder: (context, state) {
           var cubit = LoginCubit.get(context);
 

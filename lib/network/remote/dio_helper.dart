@@ -6,9 +6,10 @@ class DioHelper {
   static init() {
     dio = Dio(
       BaseOptions(
-          baseUrl: 'https://student.valuxapps.com/api/',
-          receiveDataWhenStatusError: true,
-          headers: {'Content-Type': 'application/json'}),
+        baseUrl: 'https://student.valuxapps.com/api/',
+        receiveDataWhenStatusError: true,
+        headers: {'Content-Type': 'application/json'},
+      ),
     );
   }
 
